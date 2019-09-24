@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "current_profile_name": "default",
+  "repos": [
+    {
+      "type": "git",
+      "path": "github.com/neoclide/coc.nvim",
+      "version": "8ac9458a385fbf4fe241621ebc948075d4a09120"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "default",
+      "repos_path": [
+        "github.com/neoclide/coc.nvim"
+      ]
+    }
+  ]
+}

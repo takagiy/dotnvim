@@ -4,15 +4,27 @@
   "repos": [
     {
       "type": "git",
+      "path": "github.com/jakwings/vim-pony",
+      "version": "b26f01a869000b73b80dceabd725d91bfe175b75"
+    },
+    {
+      "type": "git",
       "path": "github.com/neoclide/coc.nvim",
       "version": "8ac9458a385fbf4fe241621ebc948075d4a09120"
+    },
+    {
+      "type": "static",
+      "path": "localhost/takagiy/plugins",
+      "version": ""
     }
   ],
   "profiles": [
     {
       "name": "default",
       "repos_path": [
-        "github.com/neoclide/coc.nvim"
+        "github.com/jakwings/vim-pony",
+        "github.com/neoclide/coc.nvim",
+        "localhost/takagiy/plugins"
       ]
     }
   ]

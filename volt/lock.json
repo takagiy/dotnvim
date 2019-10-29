@@ -13,6 +13,11 @@
       "version": "8ac9458a385fbf4fe241621ebc948075d4a09120"
     },
     {
+      "type": "git",
+      "path": "github.com/qnighy/satysfi.vim",
+      "version": "d0f331c73b340cc93ee475efccdbb1826dd9cbac"
+    },
+    {
       "type": "static",
       "path": "localhost/takagiy/plugins",
       "version": ""
@@ -24,6 +29,7 @@
       "repos_path": [
         "github.com/jakwings/vim-pony",
         "github.com/neoclide/coc.nvim",
+        "github.com/qnighy/satysfi.vim",
         "localhost/takagiy/plugins"
       ]
     }

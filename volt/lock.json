@@ -4,6 +4,11 @@
   "repos": [
     {
       "type": "git",
+      "path": "github.com/ElmCast/elm-vim",
+      "version": "165107a9fd2b20c8f050fc4f977b4e41c790b1e7"
+    },
+    {
+      "type": "git",
       "path": "github.com/jakwings/vim-pony",
       "version": "b26f01a869000b73b80dceabd725d91bfe175b75"
     },
@@ -27,6 +32,7 @@
     {
       "name": "default",
       "repos_path": [
+        "github.com/ElmCast/elm-vim",
         "github.com/jakwings/vim-pony",
         "github.com/neoclide/coc.nvim",
         "github.com/qnighy/satysfi.vim",

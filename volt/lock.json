@@ -10,12 +10,32 @@
     {
       "type": "git",
       "path": "github.com/chrisbra/Colorizer",
-      "version": "5fbdf24d17465c3be03b20c591ceae82f793ae1c"
+      "version": "879e6c69c0c02c4ef0f08b3955c60de16efd8fb8"
     },
     {
       "type": "git",
       "path": "github.com/jakwings/vim-pony",
       "version": "b26f01a869000b73b80dceabd725d91bfe175b75"
+    },
+    {
+      "type": "git",
+      "path": "github.com/junegunn/fzf",
+      "version": "07a03b3e739e146182062b1b7f84507569cfdbec"
+    },
+    {
+      "type": "git",
+      "path": "github.com/junegunn/fzf.vim",
+      "version": "8f1e73b598d27d78dfb5843be19a73b6a3b222b1"
+    },
+    {
+      "type": "git",
+      "path": "github.com/junegunn/goyo.vim",
+      "version": "3e129198bba7d6b50406902002ad7d213a6cccaa"
+    },
+    {
+      "type": "git",
+      "path": "github.com/lambdalisue/suda.vim",
+      "version": "24a1c09ddb7ca61559f7f082c3d0b1dd13737e27"
     },
     {
       "type": "git",
@@ -25,12 +45,22 @@
     {
       "type": "git",
       "path": "github.com/neoclide/coc.nvim",
-      "version": "8ac9458a385fbf4fe241621ebc948075d4a09120"
+      "version": "aa3647842f5bf436c8e1556667033046d83426d5"
     },
     {
       "type": "git",
       "path": "github.com/qnighy/satysfi.vim",
-      "version": "d0f331c73b340cc93ee475efccdbb1826dd9cbac"
+      "version": "4a04e9dca7de5eda6ebffcb533a0d75986b2675e"
+    },
+    {
+      "type": "git",
+      "path": "github.com/reedes/vim-colors-pencil",
+      "version": "1779fa52b8aeddc35f3b91442c59f201815c24e0"
+    },
+    {
+      "type": "git",
+      "path": "github.com/rust-lang/rust.vim",
+      "version": "0d8ce07aaa3b95e61bf319b25bb3b1a4ecc780c2"
     },
     {
       "type": "static",
@@ -45,9 +75,14 @@
         "github.com/ElmCast/elm-vim",
         "github.com/chrisbra/Colorizer",
         "github.com/jakwings/vim-pony",
-        "github.com/mhinz/vim-startify",
+        "github.com/junegunn/fzf",
+        "github.com/junegunn/fzf.vim",
+        "github.com/junegunn/goyo.vim",
+        "github.com/lambdalisue/suda.vim",
         "github.com/neoclide/coc.nvim",
         "github.com/qnighy/satysfi.vim",
+        "github.com/reedes/vim-colors-pencil",
+        "github.com/rust-lang/rust.vim",
         "localhost/takagiy/plugins"
       ]
     }

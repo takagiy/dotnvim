@@ -1,4 +1,6 @@
 {
+  "coc.preferences.enableFloatHighlight": false,
+  "diagnostic.maxWindowHeight": 65535,
   "languageserver": {
     "cquery": {
       "command": "cquery",

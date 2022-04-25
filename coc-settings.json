@@ -1,22 +1,25 @@
 {
-  "coc.preferences.enableFloatHighlight": false,
-  "diagnostic.maxWindowHeight": 65535,
+  "tsserver.log": "verbose",
   "languageserver": {
-    "cquery": {
-      "command": "cquery",
-      "args": ["--log-file=/tmp/cq.log"],
-      "filetypes": ["c", "cpp"],
-      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "initializationOptions": {
-        "cacheDirectory": "/tmp/cquery"
-      }
-    },
     "elmLS": {
       "command": "elm-language-server",
       "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"],
-      "initializationOptions": {
-      }
+      "rootPatterns": ["elm.json"]
+    },
+    "ocamllsp": {
+      "command": "ocamllsp",
+      "rootPatterns": ["dune-project"],
+      "filetypes": ["ocaml"]
     }
-  }
+  },
+  "java": {
+    "format": {
+      "enabled": "true",
+      "onType.enabled": "true",
+      "settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+    }
+  },
+  "rust-analyzer.cargo.allFeatures": true,
+  // If you use neovim you can enable codelenses with this
+  "codeLens.enable": true
 }

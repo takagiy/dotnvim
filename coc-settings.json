@@ -1,4 +1,10 @@
 {
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "tsserver.log": "verbose",
   "languageserver": {
     "elmLS": {
@@ -10,6 +16,16 @@
       "command": "ocamllsp",
       "rootPatterns": ["dune-project"],
       "filetypes": ["ocaml"]
+    },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git"],
+      "initializationOptions": {
+         "cache": {
+           "directory": "/tmp/ccls"
+         }
+       }
     }
   },
   "java": {
@@ -20,6 +36,8 @@
     }
   },
   "rust-analyzer.cargo.allFeatures": true,
+  "diagnostic.virtualText": true,
+  "codeLens.position" : "eol",
   // If you use neovim you can enable codelenses with this
   "codeLens.enable": true
 }

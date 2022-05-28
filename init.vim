@@ -14,7 +14,10 @@ let g:coc_global_extensions = [
     \ 'coc-rust-analyzer',
     \ 'coc-toml',
     \ 'coc-texlab',
-    \ 'coc-tsserver'
+    \ 'coc-tsserver',
+    \ 'coc-prettier',
+    \ 'coc-json'
+    "\ 'coc-clangd'
     \ ]
 
 set mouse=ni

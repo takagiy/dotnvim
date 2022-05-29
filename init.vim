@@ -169,10 +169,13 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-" Open FZF History
+" Open mru
 nnoremap <silent> <ESC> :<C-u>FzfPreviewMruFilesRpc<CR>
+" Open buffers
 nnoremap <silent><nowait> b :<C-u>FzfPreviewBuffersRpc<CR>
+" Start git staging
 nnoremap <silent><nowait> add :<C-u>FzfPreviewGitStatusRpc<CR>
+nnoremap git :<C-u>Git
 
 function s:on_enter() abort
   if @% == ''

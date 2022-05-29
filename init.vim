@@ -1,13 +1,13 @@
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'bfrg/vim-fzy'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'lambdalisue/suda.vim'
 Plug 'elmcast/elm-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 let g:coc_global_extensions = [
@@ -149,6 +149,8 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+let g:fzf_preview_floating_window_rate = 1.0
+
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -168,4 +170,14 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Open FZF History
-nnoremap <silent> <TAB> :<C-u>History<CR>
+nnoremap <silent> <ESC> :<C-u>FzfPreviewMruFilesRpc<CR>
+nnoremap <silent><nowait> b :<C-u>FzfPreviewBuffersRpc<CR>
+nnoremap <silent><nowait> add :<C-u>FzfPreviewGitStatusRpc<CR>
+
+function s:on_enter() abort
+  if @% == ''
+    execute 'FzfPreviewMruFilesRpc'
+  endif
+endfunction
+
+autocmd VimEnter * :call s:on_enter()

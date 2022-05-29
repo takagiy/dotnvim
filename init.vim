@@ -175,6 +175,7 @@ nnoremap <silent> <ESC> :<C-u>FzfPreviewMruFilesRpc<CR>
 nnoremap <silent><nowait> b :<C-u>FzfPreviewBuffersRpc<CR>
 " Start git staging
 nnoremap <silent><nowait> add :<C-u>FzfPreviewGitStatusRpc<CR>
+nnoremap <silent><nowait> commit :<C-u>Git commit<CR>
 nnoremap git :<C-u>Git
 
 function s:on_enter() abort

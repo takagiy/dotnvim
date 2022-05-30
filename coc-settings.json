@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "refactor.saveToFile": true,
   "tsserver.log": "verbose",
   "languageserver": {
     "elmLS": {

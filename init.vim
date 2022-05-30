@@ -8,6 +8,7 @@ Plug 'elmcast/elm-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-rooter'
 call plug#end()
 
 let g:coc_global_extensions = [

@@ -177,6 +177,13 @@ nnoremap <silent><nowait> add :<C-u>FzfPreviewGitStatusRpc<CR>
 nnoremap <silent><nowait> commit :<C-u>Git commit<CR>
 nnoremap git :<C-u>Git
 
+autocmd user fzf_preview#rpc#initialized :call s:on_fzf_preview_initialized()
+
+function s:on_fzf_preview_initialized() abort
+  let g:fzf_preview_custom_processes['git-status'] = fzf_preview#remote#process#get_default_processes('git-status', 'rpc')
+  let g:fzf_preview_custom_processes['git-status']['ctrl-i'] = g:fzf_preview_custom_processes['git-status']['ctrl-a']
+endfunction
+
 function s:on_enter() abort
   if @% == ''
     execute 'FzfPreviewMruFilesRpc'

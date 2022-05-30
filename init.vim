@@ -174,7 +174,7 @@ nnoremap <silent> <ESC> :<C-u>FzfPreviewMruFilesRpc<CR>
 nnoremap <silent><nowait> b :<C-u>FzfPreviewBuffersRpc<CR>
 nnoremap <silent><nowait> . :<C-u>FzfPreviewDirectoryFiles<CR>
 nnoremap <silent><nowait> add :<C-u>FzfPreviewGitStatusRpc<CR>
-nnoremap <silent><nowait> commit :<C-u>Git commit<CR>
+nnoremap <silent><nowait> commit :<C-u>Git commit -v<CR>
 nnoremap git :<C-u>Git
 
 autocmd user fzf_preview#rpc#initialized :call s:on_fzf_preview_initialized()

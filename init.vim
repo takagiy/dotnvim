@@ -179,14 +179,14 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent><nowait> . :<C-u>Buffers<CR>
-nnoremap <silent><nowait> <TAB> :<C-u>FZF<CR>
+nnoremap <silent><nowait> <TAB> :<C-u>GFiles --cached --others --exclude-standard<CR>
 
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 function s:on_enter() abort
   if @% == ''
-    execute 'FZF'
+    execute 'GFiles --cached --others --exclude-standard'
   endif
 endfunction
 

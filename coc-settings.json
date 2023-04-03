@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["*"],
+  "colors.filetypes": ["*"],
   "refactor.saveToFile": true,
   "tsserver.log": "verbose",
   "languageserver": {
@@ -25,13 +26,17 @@
     }
   },
   "java": {
+    "home": "/usr/lib/jvm/java-19-openjdk",
     "format": {
       "enabled": "true",
       "onType.enabled": "true",
       "settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
     }
   },
-  "rust-analyzer.cargo.allFeatures": true,
+  "rust-analyzer": {
+    "updates.channel": "nightly",
+    "cargo.allFeatures": true
+  },
   "diagnostic.virtualText": true,
   "codeLens.position": "eol",
   // If you use neovim you can enable codelenses with this

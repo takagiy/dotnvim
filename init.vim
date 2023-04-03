@@ -1,14 +1,18 @@
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
+Plug 'junegunn/fzf.vim'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'Shatur/neovim-ayu'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'lambdalisue/suda.vim'
 Plug 'elmcast/elm-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'LnL7/vim-nix'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
+Plug 'github/copilot.vim'
 call plug#end()
 
 let g:coc_global_extensions = [
@@ -17,10 +21,12 @@ let g:coc_global_extensions = [
     \ 'coc-texlab',
     \ 'coc-tsserver',
     \ 'coc-prettier',
-    \ 'coc-json'
+    \ 'coc-json',
+    \ 'coc-highlight'
     "\ 'coc-clangd'
     \ ]
 
+set termguicolors
 set mouse=ni
 set clipboard+=unnamedplus
 set expandtab
@@ -30,7 +36,10 @@ let g:suda_smart_edit = 1
 nnoremap ; :
 inoremap jj <ESC>
 let g:mapleader = "\<Space>"
+set background=light
 colorscheme onehalflight
+
+hi! SpecialComment ctermfg=247 guifg=#a0a1a7
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -106,7 +115,7 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -148,9 +157,8 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline^=%f%r\ %l/%L\ %{coc#status()}%{get(b:,'coc_current_function','')}
 
-let g:fzf_preview_floating_window_rate = 1.0
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -170,25 +178,18 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-nnoremap <silent> <ESC> :<C-u>FzfPreviewMruFilesRpc<CR>
-nnoremap <silent><nowait> b :<C-u>FzfPreviewBuffersRpc<CR>
-nnoremap <silent><nowait> . :<C-u>FzfPreviewDirectoryFiles<CR>
-nnoremap <silent><nowait> add :<C-u>FzfPreviewGitStatusRpc<CR>
-nnoremap <silent><nowait> commit :<C-u>Git commit -v<CR>
-nnoremap git :<C-u>Git
+nnoremap <silent><nowait> . :<C-u>Buffers<CR>
+nnoremap <silent><nowait> <TAB> :<C-u>FZF<CR>
 
-autocmd user fzf_preview#rpc#initialized :call s:on_fzf_preview_initialized()
 
-function s:on_fzf_preview_initialized() abort
-  let g:fzf_preview_custom_processes['git-status'] = fzf_preview#remote#process#get_default_processes('git-status', 'rpc')
-  let g:fzf_preview_custom_processes['git-status']['enter'] = g:fzf_preview_custom_processes['git-status']['ctrl-a']
-  let g:fzf_preview_custom_processes['git-status']['<'] = g:fzf_preview_custom_processes['git-status']['ctrl-r']
-endfunction
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 function s:on_enter() abort
   if @% == ''
-    execute 'FzfPreviewMruFilesRpc'
+    execute 'FZF'
   endif
 endfunction
 
 autocmd VimEnter * :call s:on_enter()
+
+set rtp^="/home/arith/.opam/default/share/ocp-indent/vim"

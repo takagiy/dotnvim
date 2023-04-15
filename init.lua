@@ -42,6 +42,25 @@ require('packer').startup({
       end
     }
     use {
+      'nvim-treesitter/nvim-treesitter',
+      run = function()
+        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        ts_update()
+      end,
+      config = function()
+        require('nvim-treesitter.configs').setup({
+          ensure_installed = { "lua", "rust" },
+          auto_install = true,
+          highlight = {
+            enable = true,
+          },
+          indent = {
+            enable = true
+          }
+        })
+      end
+    }
+    use {
       'junegunn/fzf',
       run = function() vim.fn['fzf#install']() end
     }
@@ -61,13 +80,14 @@ require('packer').startup({
       end
     }
     use {
-      'sonph/onehalf',
-      rtp = 'vim',
+      'navarasu/onedark.nvim',
       config = function()
         vim.cmd [[syntax on]]
         vim.opt.background = 'light'
-        vim.cmd [[colorscheme onehalflight]]
-        vim.cmd [[hi! SpecialComment ctermfg=247 guifg=#a0a1a7]]
+        require('onedark').setup({
+          style = 'light'
+        })
+        require('onedark').load()
       end
     }
   end,
@@ -88,8 +108,6 @@ vim.cmd([[
 ]])
 
 local set = vim.opt
-
-set.termguicolors = true
 
 set.clipboard = 'unnamedplus'
 

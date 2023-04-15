@@ -25,6 +25,11 @@
       }
     }
   },
+  "Lua": {
+    "diagnostics": {
+      "globals": ["vim"]
+    }
+  },
   "java": {
     "home": "/usr/lib/jvm/java-19-openjdk",
     "format": {

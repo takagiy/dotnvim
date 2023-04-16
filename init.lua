@@ -68,9 +68,13 @@ require('packer').startup({
       'junegunn/fzf.vim',
       requires = { 'junegunn/fzf' },
       config = function()
-        vim.keymap.set('n', '<Tab>', ':GFiles --cached --others --exclude-standard<CR>',
+        vim.cmd [[
+          autocmd! FileType fzf set noshowmode noruler
+            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+        ]]
+        vim.keymap.set('n', 'e', ':GFiles --cached --others --exclude-standard<CR>',
           { noremap = true, silent = true })
-        vim.keymap.set('n', '<S-Tab>', ':Buffers<CR>', { noremap = true, silent = true })
+        vim.keymap.set('n', 'b', ':Buffers<CR>', { noremap = true, silent = true })
       end
     }
     use {
@@ -88,6 +92,22 @@ require('packer').startup({
           style = 'light'
         })
         require('onedark').load()
+      end
+    }
+    use {
+      'romgrk/barbar.nvim',
+      config = function()
+        require('barbar').setup({
+          icons = {
+            button = "x",
+            filetype = {
+              enabled = false
+            },
+          }
+        })
+        local opts = { noremap = true, silent = true }
+        vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', opts)
+        vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', opts)
       end
     }
   end,
@@ -119,3 +139,5 @@ set.shiftwidth = 0
 
 vim.g.mapleader = ' '
 vim.keymap.set('n', ';', ':', { noremap = true })
+vim.keymap.set('', '<PageUp>', '', { noremap = true })
+vim.keymap.set('', '<PageDown>', '', { noremap = true })

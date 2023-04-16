@@ -68,13 +68,13 @@ require('packer').startup({
       'junegunn/fzf.vim',
       requires = { 'junegunn/fzf' },
       config = function()
-        vim.cmd [[
-          autocmd! FileType fzf set noshowmode noruler
-            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-        ]]
-        vim.keymap.set('n', 'e', ':GFiles --cached --others --exclude-standard<CR>',
-          { noremap = true, silent = true })
-        vim.keymap.set('n', 'b', ':Buffers<CR>', { noremap = true, silent = true })
+        vim.g.fzf_layout = {
+          window = { width = 0.9, height = 0.9 }
+        }
+        local opts = { noremap = true, silent = true }
+        vim.keymap.set('n', 'e', ':GFiles --cached --others --exclude-standard<CR>', opts)
+        vim.keymap.set('n', '-', ':Buffers<CR>', opts)
+        vim.keymap.set('n', '?', ':Lines!<CR>', opts)
       end
     }
     use {
@@ -99,6 +99,7 @@ require('packer').startup({
       config = function()
         require('barbar').setup({
           icons = {
+            buffer_index = true,
             button = "x",
             filetype = {
               enabled = false
@@ -108,6 +109,16 @@ require('packer').startup({
         local opts = { noremap = true, silent = true }
         vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', opts)
         vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', opts)
+        vim.keymap.set('n', '1', '<Cmd>BufferGoto 1<CR>', opts)
+        vim.keymap.set('n', '2', '<Cmd>BufferGoto 2<CR>', opts)
+        vim.keymap.set('n', '3', '<Cmd>BufferGoto 3<CR>', opts)
+        vim.keymap.set('n', '4', '<Cmd>BufferGoto 4<CR>', opts)
+        vim.keymap.set('n', '5', '<Cmd>BufferGoto 5<CR>', opts)
+        vim.keymap.set('n', '6', '<Cmd>BufferGoto 6<CR>', opts)
+        vim.keymap.set('n', '7', '<Cmd>BufferGoto 7<CR>', opts)
+        vim.keymap.set('n', '8', '<Cmd>BufferGoto 8<CR>', opts)
+        vim.keymap.set('n', '9', '<Cmd>BufferGoto 9<CR>', opts)
+        vim.keymap.set('n', '0', '<Cmd>BufferLast<CR>', opts)
       end
     }
   end,
@@ -121,9 +132,17 @@ require('packer').startup({
 })
 
 vim.cmd([[
-  augroup packer_user_config
+augroup packer_user_config
+  autocmd!
+  autocmd BufWritePost init.lua source <afile> | PackerCompile
+augroup end
+]])
+vim.cmd([[
+  augroup terminal_config
     autocmd!
-    autocmd BufWritePost init.lua source <afile> | PackerCompile
+    autocmd TermOpen,BufEnter term://* startinsert
+    autocmd TermOpen,BufEnter term://* setlocal laststatus=0 cmdheight=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> setlocal laststatus=2 cmdheight=1 showmode ruler
   augroup end
 ]])
 

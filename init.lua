@@ -132,16 +132,13 @@ require('packer').startup({
 })
 
 vim.cmd([[
-augroup packer_user_config
-  autocmd!
-  autocmd BufWritePost init.lua source <afile> | PackerCompile
-augroup end
-]])
-vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost init.lua source <afile> | PackerCompile
+  augroup end
   augroup terminal_config
     autocmd!
-    autocmd TermOpen,BufEnter term://* startinsert
-    autocmd TermOpen,BufEnter term://* setlocal laststatus=0 cmdheight=0 noshowmode noruler
+    autocmd TermOpen,BufEnter term://* startinsert | setlocal laststatus=0 cmdheight=0 noshowmode noruler
       \| autocmd BufLeave <buffer> setlocal laststatus=2 cmdheight=1 showmode ruler
   augroup end
 ]])

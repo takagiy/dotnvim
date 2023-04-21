@@ -49,7 +49,7 @@ require('packer').startup({
       end,
       config = function()
         require('nvim-treesitter.configs').setup({
-          ensure_installed = { "lua", "rust" },
+          ensure_installed = { "lua", "rust", "diff" },
           auto_install = true,
           highlight = {
             enable = true,
@@ -107,6 +107,7 @@ require('packer').startup({
           }
         })
         local opts = { noremap = true, silent = true }
+        vim.keymap.set('n', 'qq', '<Cmd>BufferClose<CR>', opts)
         vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', opts)
         vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', opts)
         vim.keymap.set('n', '1', '<Cmd>BufferGoto 1<CR>', opts)
@@ -157,3 +158,4 @@ vim.g.mapleader = ' '
 vim.keymap.set('n', ';', ':', { noremap = true })
 vim.keymap.set('', '<PageUp>', '', { noremap = true })
 vim.keymap.set('', '<PageDown>', '', { noremap = true })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })

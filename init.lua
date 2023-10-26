@@ -16,6 +16,7 @@ require('packer').startup({
           'coc-prettier',
           'coc-highlight',
           'coc-lua',
+          'coc-java',
         }
         local function check_back_space()
           local col = vim.fn.col('.') - 1
@@ -39,6 +40,9 @@ require('packer').startup({
           end
           return "\r"
         end, opts)
+        vim.g.mapleader = " "
+        vim.keymap.set("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
+        vim.keymap.set("n", "<leader>ac", "<Plug>(coc-codeaction-cursor)", { silent = true })
       end
     }
     use {
@@ -83,8 +87,7 @@ require('packer').startup({
         vim.g.suda_smart_edit = 1
       end
     }
-    use {
-      'navarasu/onedark.nvim',
+    use { 'navarasu/onedark.nvim',
       config = function()
         vim.cmd [[syntax on]]
         vim.opt.background = 'light'

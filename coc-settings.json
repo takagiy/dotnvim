@@ -25,18 +25,17 @@
       }
     }
   },
+  "toml.schema.associations": {
+    ".*/Cargo\\.toml": "https://json.schemastore.org/cargo.json"
+  },
   "Lua": {
     "diagnostics": {
       "globals": ["vim"]
     }
   },
   "java": {
-    "home": "/usr/lib/jvm/java-19-openjdk",
-    "format": {
-      "enabled": "true",
-      "onType.enabled": "true",
-      "settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
-    }
+    "jdt.ls.java.home": "/usr/lib/jvm/java-20-openjdk",
+    "import.gradle.java.home": "/usr/lib/jvm/java-20-openjdk"
   },
   "rust-analyzer": {
     "updates.channel": "nightly",

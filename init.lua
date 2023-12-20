@@ -16,6 +16,7 @@ require('packer').startup({
           'coc-prettier',
           'coc-highlight',
           'coc-lua',
+          'coc-stylua',
           'coc-java',
         }
         local function check_back_space()
@@ -53,7 +54,7 @@ require('packer').startup({
       end,
       config = function()
         require('nvim-treesitter.configs').setup({
-          ensure_installed = { "lua", "rust", "diff", "gitcommit", "git_rebase" },
+          ensure_installed = { "lua", "rust", "diff", "gitcommit", "git_rebase", "json", "toml", "yaml" },
           auto_install = true,
           highlight = {
             enable = true,

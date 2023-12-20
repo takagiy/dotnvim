@@ -1,6 +1,6 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["*"],
-  "colors.filetypes": ["*"],
+  "coc.preferences.formatOnSave": true,
+  "colors.enable": true,
   "refactor.saveToFile": true,
   "tsserver.log": "verbose",
   "languageserver": {

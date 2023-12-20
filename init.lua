@@ -53,7 +53,7 @@ require('packer').startup({
       end,
       config = function()
         require('nvim-treesitter.configs').setup({
-          ensure_installed = { "lua", "rust", "diff" },
+          ensure_installed = { "lua", "rust", "diff", "gitcommit", "git_rebase" },
           auto_install = true,
           highlight = {
             enable = true,

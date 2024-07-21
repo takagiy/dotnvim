@@ -3,6 +3,9 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup({
   function(use)
     use 'wbthomason/packer.nvim'
+    use {
+      'jghauser/mkdir.nvim'
+    }
     use 'github/copilot.vim'
     use {
       'neoclide/coc.nvim',
@@ -14,6 +17,7 @@ require('packer').startup({
           'coc-json',
           'coc-tsserver',
           'coc-prettier',
+          'coc-biome',
           'coc-highlight',
           'coc-lua',
           'coc-stylua',
@@ -44,6 +48,7 @@ require('packer').startup({
         vim.g.mapleader = " "
         vim.keymap.set("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
         vim.keymap.set("n", "<leader>ac", "<Plug>(coc-codeaction-cursor)", { silent = true })
+        vim.keymap.set("n", "<leader>d", "<Plug>(coc-definition)", { silent = true })
       end
     }
     use {
@@ -54,7 +59,18 @@ require('packer').startup({
       end,
       config = function()
         require('nvim-treesitter.configs').setup({
-          ensure_installed = { "lua", "rust", "diff", "gitcommit", "git_rebase", "json", "toml", "yaml" },
+          ensure_installed = {
+            "lua",
+            "rust",
+            "diff",
+            "gitcommit",
+            "git_rebase",
+            "json",
+            "toml",
+            "yaml",
+            "typescript",
+            "prisma",
+          },
           auto_install = true,
           highlight = {
             enable = true,

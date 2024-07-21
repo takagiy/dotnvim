@@ -28,6 +28,7 @@
   "toml.schema.associations": {
     ".*/Cargo\\.toml": "https://json.schemastore.org/cargo.json"
   },
+  "prettier.formatterPriority": -1,
   "Lua": {
     "diagnostics": {
       "globals": ["vim"]

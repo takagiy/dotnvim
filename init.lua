@@ -185,6 +185,21 @@ require('packer').startup({
         keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
         -- Resume latest coc list
         keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
+
+        -- Mouse button mappings
+        local opts = { silent = true, noremap = true }
+        vim.opt.mousemodel = 'extend'
+        -- keyset("n", "<RightMouse>", "<LeftMouse><CMD>call CocAction('jumpDefinition')<CR>", opts)
+        keyset("n", "<LeftMouse>", function()
+          vim.api.nvim_input('<LeftMouse>')
+          local mousepos = vim.fn.getmousepos()
+          local window_type = vim.fn.win_gettype(mousepos.winid)
+          if window_type == '' and mousepos.winrow ~= 0 then
+            vim.api.nvim_input('<Esc>')
+            vim.cmd('call CocActionAsync("jumpDefinition")')
+          end
+        end, opts)
+        keyset("n", "<LeftRelease>", "", opts)
       end
     }
     use {

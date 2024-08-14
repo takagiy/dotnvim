@@ -6,18 +6,35 @@
   "languageserver": {
     "elmLS": {
       "command": "elm-language-server",
-      "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"]
+      "filetypes": [
+        "elm"
+      ],
+      "rootPatterns": [
+        "elm.json"
+      ]
     },
     "ocamllsp": {
       "command": "ocamllsp",
-      "rootPatterns": ["dune-project"],
-      "filetypes": ["ocaml"]
+      "rootPatterns": [
+        "dune-project"
+      ],
+      "filetypes": [
+        "ocaml"
+      ]
     },
     "ccls": {
       "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".git"],
+      "filetypes": [
+        "c",
+        "cpp",
+        "objc",
+        "objcpp"
+      ],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".git"
+      ],
       "initializationOptions": {
         "cache": {
           "directory": "/tmp/ccls"
@@ -31,7 +48,9 @@
   "prettier.formatterPriority": -1,
   "Lua": {
     "diagnostics": {
-      "globals": ["vim"]
+      "globals": [
+        "vim"
+      ]
     }
   },
   "java": {

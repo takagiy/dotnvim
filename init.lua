@@ -163,7 +163,7 @@ require('packer').startup({
         -- Add (Neo)Vim's native statusline support
         -- NOTE: Please see `:h coc-status` for integrations with external plugins that
         -- provide custom statusline: lightline.vim, vim-airline
-        vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
+        vim.opt.statusline = "%f%r %=%l/%L %{coc#status()}%{get(b:,'coc_current_function','')}"
 
         -- Mappings for CoCList
         -- code actions and coc stuff

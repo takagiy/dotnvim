@@ -46,21 +46,15 @@
     ".*/Cargo\\.toml": "https://json.schemastore.org/cargo.json"
   },
   "prettier.formatterPriority": -1,
-  "Lua": {
-    "diagnostics": {
-      "globals": [
-        "vim"
-      ]
-    }
-  },
-  "java": {
-    "jdt.ls.java.home": "/usr/lib/jvm/java-20-openjdk",
-    "import.gradle.java.home": "/usr/lib/jvm/java-20-openjdk"
-  },
-  "rust-analyzer": {
-    "updates.channel": "nightly",
-    "cargo.allFeatures": true
-  },
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.diagnostics.globals": [
+    "vim"
+  ],
+  "java.jdt.ls.java.home": "/usr/lib/jvm/java-20-openjdk",
+  "java.import.gradle.home": "/usr/lib/jvm/java-20-openjdk",
+  "rust-analyzer.updates.channel": "nightly",
+  "rust-analyzer.cargo.features": "all",
   "diagnostic.virtualText": true,
   "codeLens.position": "eol",
   // If you use neovim you can enable codelenses with this

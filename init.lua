@@ -1,27 +1,26 @@
 vim.cmd [[packadd packer.nvim]]
 
-require('packer').startup({
+require("packer").startup({
   function(use)
-    use 'wbthomason/packer.nvim'
+    use "wbthomason/packer.nvim"
     use {
-      'jghauser/mkdir.nvim'
+      "jghauser/mkdir.nvim"
     }
-    use 'github/copilot.vim'
+    use "github/copilot.vim"
     use {
-      'neoclide/coc.nvim',
-      branch = 'release',
+      "neoclide/coc.nvim",
+      branch = "release",
       config = function()
         vim.g.coc_global_extensions = {
-          'coc-rust-analyzer',
-          'coc-toml',
-          'coc-json',
-          'coc-tsserver',
-          'coc-prettier',
-          'coc-biome',
-          'coc-highlight',
-          'coc-lua',
-          'coc-stylua',
-          'coc-java',
+          "coc-rust-analyzer",
+          "coc-toml",
+          "coc-json",
+          "coc-tsserver",
+          "coc-prettier",
+          "coc-biome",
+          "coc-highlight",
+          "coc-lua",
+          "coc-java",
         }
         -- https://raw.githubusercontent.com/neoclide/coc.nvim/master/doc/coc-example-config.lua
 
@@ -40,8 +39,8 @@ require('packer').startup({
         local keyset = vim.keymap.set
         -- Autocomplete
         function _G.check_back_space()
-          local col = vim.fn.col('.') - 1
-          return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+          local col = vim.fn.col(".") - 1
+          return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
         end
 
         -- Use Tab for trigger completion with characters ahead and navigate
@@ -77,17 +76,17 @@ require('packer').startup({
 
         -- Use K to show documentation in preview window
         function _G.show_docs()
-          local cw = vim.fn.expand('<cword>')
-          if vim.fn.index({ 'vim', 'help' }, vim.bo.filetype) >= 0 then
-            vim.api.nvim_command('h ' .. cw)
-          elseif vim.api.nvim_eval('coc#rpc#ready()') then
-            vim.fn.CocActionAsync('doHover')
+          local cw = vim.fn.expand("<cword>")
+          if vim.fn.index({ "vim", "help" }, vim.bo.filetype) >= 0 then
+            vim.api.nvim_command("h " .. cw)
+          elseif vim.api.nvim_eval("coc#rpc#ready()") then
+            vim.fn.CocActionAsync("doHover")
           else
-            vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+            vim.api.nvim_command("!" .. vim.o.keywordprg .. " " .. cw)
           end
         end
 
-        keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', { silent = true })
+        keyset("n", "K", "<CMD>lua _G.show_docs()<CR>", { silent = true })
 
 
         -- Highlight the symbol and its references on a CursorHold event(cursor is idle)
@@ -155,7 +154,7 @@ require('packer').startup({
         vim.api.nvim_create_user_command("Format", "call CocAction('format')", {})
 
         -- " Add `:Fold` command to fold current buffer
-        vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", { nargs = '?' })
+        vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", { nargs = "?" })
 
         -- Add `:OR` command for organize imports of the current buffer
         vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
@@ -190,25 +189,25 @@ require('packer').startup({
         function _G.jump_def_of_clicked()
           local mousepos = vim.fn.getmousepos()
           local window_type = vim.fn.win_gettype(mousepos.winid)
-          if window_type == '' and mousepos.winrow ~= 0 then
+          if window_type == "" and mousepos.winrow ~= 0 then
             vim.cmd('call CocActionAsync("jumpDefinition")')
           end
         end
 
         local opts = { silent = true, noremap = true }
-        vim.opt.mousemodel = 'extend'
+        vim.opt.mousemodel = "extend"
         keyset("n", "<RightMouse>", "<LeftMouse><CMD>lua _G.jump_def_of_clicked()<CR>", opts)
         keyset("n", "<LeftMouse>", "<LeftMouse><Cmd>lua _G.show_docs()<CR>", opts)
       end
     }
     use {
-      'nvim-treesitter/nvim-treesitter',
+      "nvim-treesitter/nvim-treesitter",
       run = function()
-        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
         ts_update()
       end,
       config = function()
-        require('nvim-treesitter.configs').setup({
+        require("nvim-treesitter.configs").setup({
           ensure_installed = {
             "lua",
             "rust",
@@ -232,43 +231,43 @@ require('packer').startup({
       end
     }
     use {
-      'junegunn/fzf',
-      run = function() vim.fn['fzf#install']() end
+      "junegunn/fzf",
+      run = function() vim.fn["fzf#install"]() end
     }
     use {
-      'junegunn/fzf.vim',
-      requires = { 'junegunn/fzf' },
+      "junegunn/fzf.vim",
+      requires = { "junegunn/fzf" },
       config = function()
         vim.g.fzf_layout = {
           window = { width = 0.9, height = 0.9 }
         }
         local opts = { noremap = true, silent = true }
-        vim.keymap.set('n', 'e', ':GFiles --cached --others --exclude-standard<CR>', opts)
-        vim.keymap.set('n', 'b', ':Buffers<CR>', opts)
-        vim.keymap.set('n', '?', ':Lines<CR>', opts)
-        vim.keymap.set('n', 's', ':Rg<CR>', opts)
+        vim.keymap.set("n", "e", ":GFiles --cached --others --exclude-standard<CR>", opts)
+        vim.keymap.set("n", "b", ":Buffers<CR>", opts)
+        vim.keymap.set("n", "?", ":Lines<CR>", opts)
+        vim.keymap.set("n", "s", ":Rg<CR>", opts)
       end
     }
     use {
-      'lambdalisue/suda.vim',
+      "lambdalisue/suda.vim",
       config = function()
         vim.g.suda_smart_edit = 1
       end
     }
-    use { 'navarasu/onedark.nvim',
+    use { "navarasu/onedark.nvim",
       config = function()
         vim.cmd [[syntax on]]
-        vim.opt.background = 'light'
-        require('onedark').setup({
-          style = 'light'
+        vim.opt.background = "light"
+        require("onedark").setup({
+          style = "light"
         })
-        require('onedark').load()
+        require("onedark").load()
       end
     }
     use {
-      'romgrk/barbar.nvim',
+      "romgrk/barbar.nvim",
       config = function()
-        require('barbar').setup({
+        require("barbar").setup({
           icons = {
             buffer_index = true,
             button = "x",
@@ -278,26 +277,26 @@ require('packer').startup({
           }
         })
         local opts = { noremap = true, silent = true }
-        vim.keymap.set('n', 'qq', '<Cmd>BufferClose<CR>', opts)
-        vim.keymap.set('n', '<Tab>', '<Cmd>BufferNext<CR>', opts)
-        vim.keymap.set('n', '<S-Tab>', '<Cmd>BufferPrevious<CR>', opts)
-        vim.keymap.set('n', '1', '<Cmd>BufferGoto 1<CR>', opts)
-        vim.keymap.set('n', '2', '<Cmd>BufferGoto 2<CR>', opts)
-        vim.keymap.set('n', '3', '<Cmd>BufferGoto 3<CR>', opts)
-        vim.keymap.set('n', '4', '<Cmd>BufferGoto 4<CR>', opts)
-        vim.keymap.set('n', '5', '<Cmd>BufferGoto 5<CR>', opts)
-        vim.keymap.set('n', '6', '<Cmd>BufferGoto 6<CR>', opts)
-        vim.keymap.set('n', '7', '<Cmd>BufferGoto 7<CR>', opts)
-        vim.keymap.set('n', '8', '<Cmd>BufferGoto 8<CR>', opts)
-        vim.keymap.set('n', '9', '<Cmd>BufferGoto 9<CR>', opts)
-        vim.keymap.set('n', '0', '<Cmd>BufferLast<CR>', opts)
+        vim.keymap.set("n", "qq", "<Cmd>BufferClose<CR>", opts)
+        vim.keymap.set("n", "<Tab>", "<Cmd>BufferNext<CR>", opts)
+        vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferPrevious<CR>", opts)
+        vim.keymap.set("n", "1", "<Cmd>BufferGoto 1<CR>", opts)
+        vim.keymap.set("n", "2", "<Cmd>BufferGoto 2<CR>", opts)
+        vim.keymap.set("n", "3", "<Cmd>BufferGoto 3<CR>", opts)
+        vim.keymap.set("n", "4", "<Cmd>BufferGoto 4<CR>", opts)
+        vim.keymap.set("n", "5", "<Cmd>BufferGoto 5<CR>", opts)
+        vim.keymap.set("n", "6", "<Cmd>BufferGoto 6<CR>", opts)
+        vim.keymap.set("n", "7", "<Cmd>BufferGoto 7<CR>", opts)
+        vim.keymap.set("n", "8", "<Cmd>BufferGoto 8<CR>", opts)
+        vim.keymap.set("n", "9", "<Cmd>BufferGoto 9<CR>", opts)
+        vim.keymap.set("n", "0", "<Cmd>BufferLast<CR>", opts)
       end
     }
   end,
   config = {
     display = {
       open_fn = function()
-        return require('packer.util').float({ border = 'single' })
+        return require("packer.util").float({ border = "single" })
       end
     }
   }
@@ -317,16 +316,18 @@ vim.cmd([[
 
 local set = vim.opt
 
-set.clipboard = 'unnamedplus'
+set.clipboard = "unnamedplus"
 
-set.mouse = 'a'
+set.mouse = "a"
 
 set.expandtab = true
 set.tabstop = 2
 set.shiftwidth = 0
 
-vim.g.mapleader = ' '
-vim.keymap.set('n', ';', ':', { noremap = true })
-vim.keymap.set('', '<PageUp>', '', { noremap = true })
-vim.keymap.set('', '<PageDown>', '', { noremap = true })
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
+vim.g.netrw_liststyle = 3
+vim.g.netrw_banner = 0
+vim.g.mapleader = " "
+vim.keymap.set("n", ";", ":", { noremap = true })
+vim.keymap.set("", "<PageUp>", "", { noremap = true })
+vim.keymap.set("", "<PageDown>", "", { noremap = true })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })

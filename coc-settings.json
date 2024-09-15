@@ -51,6 +51,10 @@
   "Lua.diagnostics.globals": [
     "vim"
   ],
+  "Lua.format.enable": true,
+  "Lua.format.defaultConfig": {
+    "quote_style": "double"
+  },
   "java.jdt.ls.java.home": "/usr/lib/jvm/java-20-openjdk",
   "java.import.gradle.home": "/usr/lib/jvm/java-20-openjdk",
   "rust-analyzer.updates.channel": "nightly",

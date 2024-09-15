@@ -6,6 +6,20 @@ require("packer").startup({
     use {
       "jghauser/mkdir.nvim"
     }
+    use {
+      "akinsho/toggleterm.nvim",
+      config = function()
+        require("toggleterm").setup({
+          open_mapping = "TT",
+          insert_mappings = false,
+          persist_size = false,
+          direction = "float",
+          float_opts = {
+            border = "curved",
+          },
+        })
+      end
+    }
     use "github/copilot.vim"
     use {
       "neoclide/coc.nvim",
@@ -324,8 +338,13 @@ set.expandtab = true
 set.tabstop = 2
 set.shiftwidth = 0
 
+set.hidden = true
+
+set.shell = "zsh -l"
+
 vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
+
 vim.g.mapleader = " "
 vim.keymap.set("n", ";", ":", { noremap = true })
 vim.keymap.set("", "<PageUp>", "", { noremap = true })

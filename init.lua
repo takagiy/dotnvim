@@ -13,10 +13,7 @@ require("packer").startup({
           open_mapping = "TT",
           insert_mappings = false,
           persist_size = false,
-          direction = "float",
-          float_opts = {
-            border = "curved",
-          },
+          direction = "tab",
         })
       end
     }
@@ -257,9 +254,10 @@ require("packer").startup({
         }
         local opts = { noremap = true, silent = true }
         vim.keymap.set("n", "e", ":GFiles --cached --others --exclude-standard<CR>", opts)
-        vim.keymap.set("n", "b", ":Buffers<CR>", opts)
+        vim.keymap.set("n", "r", ":Rg<CR>", opts)
+        vim.keymap.set("n", "t", ":Buffers<CR>", opts)
+        vim.keymap.set("n", "H", ":History<CR>", opts)
         vim.keymap.set("n", "?", ":Lines<CR>", opts)
-        vim.keymap.set("n", "s", ":Rg<CR>", opts)
       end
     }
     use {
@@ -346,6 +344,8 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
 
 vim.g.mapleader = " "
+vim.keymap.set("i", "jk", "<Esc>", { noremap = true })
+vim.keymap.set("t", "jk", "<Esc>", { noremap = true })
 vim.keymap.set("n", ";", ":", { noremap = true })
 vim.keymap.set("", "<PageUp>", "", { noremap = true })
 vim.keymap.set("", "<PageDown>", "", { noremap = true })

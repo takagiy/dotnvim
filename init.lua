@@ -6,17 +6,6 @@ require("packer").startup({
     use {
       "jghauser/mkdir.nvim"
     }
-    use {
-      "akinsho/toggleterm.nvim",
-      config = function()
-        require("toggleterm").setup({
-          open_mapping = "TT",
-          insert_mappings = false,
-          persist_size = false,
-          direction = "tab",
-        })
-      end
-    }
     use "github/copilot.vim"
     use {
       "neoclide/coc.nvim",
@@ -320,9 +309,10 @@ vim.cmd([[
     autocmd BufWritePost init.lua source <afile> | PackerCompile
   augroup end
   augroup terminal_config
-    autocmd!
-    autocmd TermOpen,BufEnter term://* startinsert | setlocal laststatus=0 cmdheight=0 noshowmode noruler
-      \| autocmd BufLeave <buffer> setlocal laststatus=2 cmdheight=1 showmode ruler
+    "autocmd!
+    "autocmd TermOpen,BufEnter term://* startinsert | setlocal laststatus=0 cmdheight=0 noshowmode noruler
+    "  \| autocmd BufLeave <buffer> setlocal laststatus=2 cmdheight=1 showmode ruler
+    autocmd TermOpen,TermEnter * startinsert | set buflisted
   augroup end
 ]])
 
@@ -344,9 +334,11 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
 
 vim.g.mapleader = " "
+vim.keymap.set("n", "TT", "<Cmd>terminal<CR>", { noremap = true })
 vim.keymap.set("i", "jk", "<Esc>", { noremap = true })
-vim.keymap.set("t", "jk", "<Esc>", { noremap = true })
+vim.keymap.set("v", "jk", "<Esc>", { noremap = true })
+vim.keymap.set("t", "jk", "<C-\\><C-n>", { noremap = true })
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 vim.keymap.set("n", ";", ":", { noremap = true })
 vim.keymap.set("", "<PageUp>", "", { noremap = true })
 vim.keymap.set("", "<PageDown>", "", { noremap = true })
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })

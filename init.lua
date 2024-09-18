@@ -1,13 +1,161 @@
-vim.cmd [[packadd packer.nvim]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
-require("packer").startup({
-  function(use)
-    use "wbthomason/packer.nvim"
-    use {
-      "jghauser/mkdir.nvim"
-    }
-    use "github/copilot.vim"
-    use {
+vim.cmd [[
+  augroup lazy_user_config
+    autocmd!
+    autocmd BufWritePost init.lua source <afile> | Lazy sync
+  augroup end
+]]
+
+require("lazy").setup({
+  spec = {
+    { "github/copilot.vim" },
+    { "jghauser/mkdir.nvim" },
+    {
+      "lambdalisue/suda.vim",
+      config = function()
+        vim.g.suda_smart_edit = 1
+      end
+    },
+    {
+      "junegunn/fzf.vim",
+      dependencies = {
+        {
+          "junegunn/fzf",
+          build = function()
+            vim.fn["fzf#install"]()
+          end
+        },
+      },
+      config = function()
+        vim.g.fzf_layout = {
+          window = { width = 0.9, height = 0.9 }
+        }
+        local opts = { noremap = true, silent = true }
+        vim.keymap.set("n", "e", ":GFiles --cached --others --exclude-standard<CR>", opts)
+        vim.keymap.set("n", "r", ":Rg<CR>", opts)
+        vim.keymap.set("n", "t", ":Buffers<CR>", opts)
+        vim.keymap.set("n", "H", ":History<CR>", opts)
+        vim.keymap.set("n", "?", ":Lines<CR>", opts)
+      end
+    },
+    {
+      "navarasu/onedark.nvim",
+      opts = {
+        style = "light",
+      },
+      config = function(plug, opts)
+        vim.cmd [[syntax on]]
+        vim.opt.background = "light"
+        require("onedark").setup(opts)
+        require("onedark").load()
+      end
+    },
+    {
+      "folke/persistence.nvim",
+      event = "VeryLazy",
+      opts = {
+        options = {
+          "blank",
+          "buffers",
+          "curdir",
+          "folds",
+          "globals",
+          "help",
+          "localoptions",
+          "skiprtp",
+          "resize",
+          "sesdir",
+          "tabpages",
+          "terminal",
+          "winpos",
+          "winsize",
+        },
+        pre_save = function()
+          vim.api.nvim_exec_autocmds("User",
+            { pattern = "SessionSavePre" })
+        end,
+        branch = true,
+      },
+      config = function(plug, opts)
+        require("persistence").setup(opts)
+        require("persistence").load()
+      end
+    },
+    {
+      "romgrk/barbar.nvim",
+      opts = {
+        icons = {
+          buffer_index = true,
+          button = "x",
+          filetype = {
+            enabled = false
+          },
+        }
+      },
+      init = function() vim.g.barbar_auto_setup = false end,
+      config = function(plug, opts)
+        require("barbar").setup(opts)
+        local keyset = vim.keymap.set
+        local opts = { noremap = true, silent = true }
+        keyset("n", "qq", "<Cmd>BufferClose<CR>", opts)
+        keyset("n", "<Tab>", "<Cmd>BufferNext<CR>", opts)
+        keyset("n", "<S-Tab>", "<Cmd>BufferPrevious<CR>", opts)
+        keyset("n", "1", "<Cmd>BufferGoto 1<CR>", opts)
+        keyset("n", "2", "<Cmd>BufferGoto 2<CR>", opts)
+        keyset("n", "3", "<Cmd>BufferGoto 3<CR>", opts)
+        keyset("n", "4", "<Cmd>BufferGoto 4<CR>", opts)
+        keyset("n", "5", "<Cmd>BufferGoto 5<CR>", opts)
+        keyset("n", "6", "<Cmd>BufferGoto 6<CR>", opts)
+        keyset("n", "7", "<Cmd>BufferGoto 7<CR>", opts)
+        keyset("n", "8", "<Cmd>BufferGoto 8<CR>", opts)
+        keyset("n", "9", "<Cmd>BufferGoto 9<CR>", opts)
+        keyset("n", "0", "<Cmd>BufferLast<CR>", opts)
+      end
+    },
+    {
+      "nvim-treesitter/nvim-treesitter",
+      build = function()
+        local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+        ts_update()
+      end,
+      opts = {
+        ensure_installed = {
+          "lua",
+          "rust",
+          "diff",
+          "gitcommit",
+          "git_rebase",
+          "json",
+          "toml",
+          "yaml",
+          "typescript",
+          "prisma",
+        },
+        auto_install = true,
+        highlight = {
+          enable = true,
+        },
+        indent = {
+          enable = true
+        }
+      },
+    },
+    {
       "neoclide/coc.nvim",
       branch = "release",
       config = function()
@@ -36,6 +184,7 @@ require("packer").startup({
         -- diagnostics appeared/became resolved
         -- vim.opt.signcolumn = "yes"
 
+        vim.g.mapleader = " "
         local keyset = vim.keymap.set
         -- Autocomplete
         function _G.check_back_space()
@@ -203,154 +352,17 @@ require("packer").startup({
         vim.opt.mousemodel = "extend"
         keyset("n", "<RightMouse>", "<LeftMouse><CMD>lua _G.jump_def_of_clicked()<CR>", opts)
         keyset("n", "<LeftMouse>", "<LeftMouse><Cmd>lua _G.show_docs()<CR>", opts)
-      end
-    }
-    use {
-      "nvim-treesitter/nvim-treesitter",
-      run = function()
-        local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-        ts_update()
       end,
-      config = function()
-        require("nvim-treesitter.configs").setup({
-          ensure_installed = {
-            "lua",
-            "rust",
-            "diff",
-            "gitcommit",
-            "git_rebase",
-            "json",
-            "toml",
-            "yaml",
-            "typescript",
-            "prisma",
-          },
-          auto_install = true,
-          highlight = {
-            enable = true,
-          },
-          indent = {
-            enable = true
-          }
-        })
-      end
     }
-    use {
-      "junegunn/fzf",
-      run = function() vim.fn["fzf#install"]() end
-    }
-    use {
-      "junegunn/fzf.vim",
-      requires = { "junegunn/fzf" },
-      config = function()
-        vim.g.fzf_layout = {
-          window = { width = 0.9, height = 0.9 }
-        }
-        local opts = { noremap = true, silent = true }
-        vim.keymap.set("n", "e", ":GFiles --cached --others --exclude-standard<CR>", opts)
-        vim.keymap.set("n", "r", ":Rg<CR>", opts)
-        vim.keymap.set("n", "t", ":Buffers<CR>", opts)
-        vim.keymap.set("n", "H", ":History<CR>", opts)
-        vim.keymap.set("n", "?", ":Lines<CR>", opts)
-      end
-    }
-    use {
-      "lambdalisue/suda.vim",
-      config = function()
-        vim.g.suda_smart_edit = 1
-      end
-    }
-    use { "navarasu/onedark.nvim",
-      config = function()
-        vim.cmd [[syntax on]]
-        vim.opt.background = "light"
-        require("onedark").setup({
-          style = "light"
-        })
-        require("onedark").load()
-      end
-    }
-    use {
-      "romgrk/barbar.nvim",
-      config = function()
-        require("barbar").setup({
-          icons = {
-            buffer_index = true,
-            button = "x",
-            filetype = {
-              enabled = false
-            },
-          }
-        })
-        local opts = { noremap = true, silent = true }
-        vim.keymap.set("n", "qq", "<Cmd>BufferClose<CR>", opts)
-        vim.keymap.set("n", "<Tab>", "<Cmd>BufferNext<CR>", opts)
-        vim.keymap.set("n", "<S-Tab>", "<Cmd>BufferPrevious<CR>", opts)
-        vim.keymap.set("n", "1", "<Cmd>BufferGoto 1<CR>", opts)
-        vim.keymap.set("n", "2", "<Cmd>BufferGoto 2<CR>", opts)
-        vim.keymap.set("n", "3", "<Cmd>BufferGoto 3<CR>", opts)
-        vim.keymap.set("n", "4", "<Cmd>BufferGoto 4<CR>", opts)
-        vim.keymap.set("n", "5", "<Cmd>BufferGoto 5<CR>", opts)
-        vim.keymap.set("n", "6", "<Cmd>BufferGoto 6<CR>", opts)
-        vim.keymap.set("n", "7", "<Cmd>BufferGoto 7<CR>", opts)
-        vim.keymap.set("n", "8", "<Cmd>BufferGoto 8<CR>", opts)
-        vim.keymap.set("n", "9", "<Cmd>BufferGoto 9<CR>", opts)
-        vim.keymap.set("n", "0", "<Cmd>BufferLast<CR>", opts)
-      end
-    }
-    use {
-      "folke/persistence.nvim",
-      config = function()
-        require("persistence").setup({
-          options = {
-            "blank",
-            "buffers",
-            "curdir",
-            "folds",
-            "globals",
-            "help",
-            "localoptions",
-            "skiprtp",
-            "resize",
-            "sesdir",
-            "tabpages",
-            "terminal",
-            "winpos",
-            "winsize",
-          },
-          pre_save = function()
-            vim.api.nvim_exec_autocmds("User",
-              { pattern = "SessionSavePre" })
-          end,
-          branch = true,
-        })
-        vim.cmd [[
-          autocmd UIEnter * lua require('persistence').load()
-        ]]
-      end
-    }
-  end,
-  config = {
-    display = {
-      open_fn = function()
-        return require("packer.util").float({ border = "single" })
-      end
-    }
-  }
+  },
 })
 
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost init.lua source <afile> | PackerCompile
-  augroup end
+vim.cmd [[
   augroup terminal_config
-    "autocmd!
-    "autocmd TermOpen,BufEnter term://* startinsert | setlocal laststatus=0 cmdheight=0 noshowmode noruler
-    "  \| autocmd BufLeave <buffer> setlocal laststatus=2 cmdheight=1 showmode ruler
+    autocmd!
     autocmd TermOpen,TermEnter * startinsert | set buflisted
   augroup end
-]])
+]]
 
 local set = vim.opt
 

@@ -49,13 +49,16 @@ require("packer").startup({
         -- NOTE: Use command ':verbose imap <tab>' to make sure Tab is not mapped by
         -- other plugins before putting this into your config
         local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
-        keyset("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
+        keyset("i", "<TAB>",
+          'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
           opts)
         keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
         -- Make <CR> to accept selected completion item or notify coc.nvim to format
         -- <C-g>u breaks current undo, please make your own choice
-        keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+        keyset("i", "<cr>",
+          [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]],
+          opts)
 
         -- Use <c-j> to trigger snippets
         keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
@@ -154,10 +157,12 @@ require("packer").startup({
         vim.api.nvim_create_user_command("Format", "call CocAction('format')", {})
 
         -- " Add `:Fold` command to fold current buffer
-        vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", { nargs = "?" })
+        vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)",
+          { nargs = "?" })
 
         -- Add `:OR` command for organize imports of the current buffer
-        vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
+        vim.api.nvim_create_user_command("OR",
+          "call CocActionAsync('runCommand', 'editor.action.organizeImport')", {})
 
         -- Add (Neo)Vim's native statusline support
         -- NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -293,6 +298,37 @@ require("packer").startup({
         vim.keymap.set("n", "0", "<Cmd>BufferLast<CR>", opts)
       end
     }
+    use {
+      "folke/persistence.nvim",
+      config = function()
+        require("persistence").setup({
+          options = {
+            "blank",
+            "buffers",
+            "curdir",
+            "folds",
+            "globals",
+            "help",
+            "localoptions",
+            "skiprtp",
+            "resize",
+            "sesdir",
+            "tabpages",
+            "terminal",
+            "winpos",
+            "winsize",
+          },
+          pre_save = function()
+            vim.api.nvim_exec_autocmds("User",
+              { pattern = "SessionSavePre" })
+          end,
+          branch = true,
+        })
+        vim.cmd [[
+          autocmd UIEnter * lua require('persistence').load()
+        ]]
+      end
+    }
   end,
   config = {
     display = {
@@ -337,8 +373,8 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "TT", "<Cmd>terminal<CR>", { noremap = true })
 vim.keymap.set("i", "jk", "<Esc>", { noremap = true })
 vim.keymap.set("v", "jk", "<Esc>", { noremap = true })
-vim.keymap.set("t", "jk", "<C-\\><C-n>", { noremap = true })
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
+vim.keymap.set("t", "jk", [[(&filetype == "fzf") ? "<Esc>" : "<C-\\><C-n>"]], { noremap = true, expr = true })
+vim.keymap.set("t", "<Esc>", [[(&filetype == "fzf") ? "<Esc>" : "<C-\\><C-n>"]], { noremap = true, expr = true })
 vim.keymap.set("n", ";", ":", { noremap = true })
 vim.keymap.set("", "<PageUp>", "", { noremap = true })
 vim.keymap.set("", "<PageDown>", "", { noremap = true })

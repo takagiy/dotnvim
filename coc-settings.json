@@ -45,7 +45,9 @@
   "toml.schema.associations": {
     ".*/Cargo\\.toml": "https://json.schemastore.org/cargo.json"
   },
+  "workspace.workspaceFolderCheckCwd": false,
   "prettier.formatterPriority": -1,
+  "biome.trace.server": "verbose",
   "Lua.workspace.checkThirdParty": false,
   "Lua.runtime.version": "LuaJIT",
   "Lua.diagnostics.globals": [

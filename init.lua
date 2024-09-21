@@ -27,7 +27,7 @@ require("lazy").setup({
     { "jghauser/mkdir.nvim" },
     {
       "lambdalisue/suda.vim",
-      config = function()
+      init = function()
         vim.g.suda_smart_edit = 1
       end
     },
@@ -129,31 +129,30 @@ require("lazy").setup({
     {
       "nvim-treesitter/nvim-treesitter",
       event = "VeryLazy",
-      build = function()
-        local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-        ts_update()
-      end,
-      opts = {
-        ensure_installed = {
-          "lua",
-          "rust",
-          "diff",
-          "gitcommit",
-          "git_rebase",
-          "json",
-          "toml",
-          "yaml",
-          "typescript",
-          "prisma",
-        },
-        auto_install = true,
-        highlight = {
-          enable = true,
-        },
-        indent = {
-          enable = true
-        }
-      },
+      build = ":TSUpdate",
+      config = function()
+        require("nvim-treesitter.configs").setup({
+          ensure_installed = {
+            "lua",
+            "rust",
+            "diff",
+            "gitcommit",
+            "git_rebase",
+            "json",
+            "toml",
+            "yaml",
+            "typescript",
+            "prisma",
+          },
+          auto_install = true,
+          highlight = {
+            enable = true,
+          },
+          indent = {
+            enable = true
+          }
+        })
+      end
     },
     {
       "neoclide/coc.nvim",
@@ -383,9 +382,6 @@ vim.g.netrw_banner = 0
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "TT", "<Cmd>terminal<CR>", { noremap = true })
-vim.keymap.set("i", "jk", "<Esc>", { noremap = true })
-vim.keymap.set("v", "jk", "<Esc>", { noremap = true })
-vim.keymap.set("t", "jk", [[(&filetype == "fzf") ? "<Esc>" : "<C-\\><C-n>"]], { noremap = true, expr = true })
 vim.keymap.set("t", "<Esc>", [[(&filetype == "fzf") ? "<Esc>" : "<C-\\><C-n>"]], { noremap = true, expr = true })
 vim.keymap.set("n", ";", ":", { noremap = true })
 vim.keymap.set("", "<PageUp>", "", { noremap = true })

@@ -14,7 +14,13 @@
       ]
     },
     "ocamllsp": {
-      "command": "ocamllsp",
+      "command": "opam",
+      "args": [
+        "config",
+        "exec",
+        "--",
+        "ocamllsp"
+      ],
       "rootPatterns": [
         "dune-project"
       ],
@@ -57,8 +63,6 @@
   "Lua.format.defaultConfig": {
     "quote_style": "double"
   },
-  "java.jdt.ls.java.home": "/usr/lib/jvm/java-20-openjdk",
-  "java.import.gradle.home": "/usr/lib/jvm/java-20-openjdk",
   "rust-analyzer.updates.channel": "nightly",
   "rust-analyzer.cargo.features": "all",
   "diagnostic.virtualText": true,

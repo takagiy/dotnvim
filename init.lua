@@ -23,7 +23,12 @@ vim.cmd [[
 
 require("lazy").setup({
   spec = {
-    { "github/copilot.vim" },
+    {
+      "github/copilot.vim",
+      config = function()
+        vim.g.copilot_filetypes = { gitcommit = true }
+      end
+    },
     { "jghauser/mkdir.nvim" },
     {
       "lambdalisue/suda.vim",
@@ -159,6 +164,7 @@ require("lazy").setup({
       branch = "release",
       config = function()
         vim.g.coc_global_extensions = {
+          "coc-kotlin",
           "coc-rust-analyzer",
           "coc-toml",
           "coc-json",

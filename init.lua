@@ -71,34 +71,11 @@ require("lazy").setup({
       end
     },
     {
-      "folke/persistence.nvim",
+      "olimorris/persisted.nvim",
       opts = {
-        options = {
-          "blank",
-          "buffers",
-          "curdir",
-          "folds",
-          "globals",
-          "help",
-          "localoptions",
-          "skiprtp",
-          "resize",
-          "sesdir",
-          "tabpages",
-          "terminal",
-          "winpos",
-          "winsize",
-        },
-        pre_save = function()
-          vim.api.nvim_exec_autocmds("User",
-            { pattern = "SessionSavePre" })
-        end,
-        branch = true,
+        use_git_branch = true,
+        autoload = true,
       },
-      config = function(plug, opts)
-        require("persistence").setup(opts)
-        require("persistence").load()
-      end
     },
     {
       "romgrk/barbar.nvim",
@@ -181,23 +158,6 @@ require("lazy").setup({
           end
         })
 
-        vim.api.nvim_create_autocmd("LspAttach", {
-          callback = function(ev)
-            local client = vim.lsp.get_client_by_id(ev.data.client_id)
-            if client == nil then
-              return
-            end
-            if client.supports_method("textDocument/formatting") then
-              vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-                buffer = ev.bufnr,
-                callback = function()
-                  vim.lsp.buf.format({ async = false })
-                end,
-              })
-            end
-          end,
-        })
-
         function _G.jump_definition_of_clicked()
           local mousepos = vim.fn.getmousepos()
           local window_type = vim.fn.win_gettype(mousepos.winid)
@@ -225,6 +185,19 @@ require("lazy").setup({
           "<LeftMouse><Cmd>lua _G.hover_definition_of_clicked()<CR>",
           { noremap = true, silent = true })
       end
+    },
+    {
+      dir = "~/Codes/nvim/lsp-actiononsave.nvim",
+      dependencies = {
+        "neovim/nvim-lspconfig",
+      },
+      opts = {
+        verbose = true,
+        servers = {
+          lua_ls = { "format" },
+          biome = { "format", "codeAction/source.organizeImports", "codeAction/source.fixAll" },
+        },
+      },
     },
     {
       "hrsh7th/nvim-cmp",

@@ -199,7 +199,7 @@ require("lazy").setup({
         function _G.jump_definition_of_clicked()
           local mousepos = vim.fn.getmousepos()
           local window_type = vim.fn.win_gettype(mousepos.winid)
-          if window_type ~= '' then
+          if window_type ~= '' or vim.bo.buftype ~= '' then
             return
           end
           vim.lsp.buf.definition()
@@ -207,7 +207,8 @@ require("lazy").setup({
 
         vim.opt.mouse = "a"
         vim.opt.mousemodel = "extend"
-        vim.keymap.set("n", "<RightMouse>", "<LeftMouse><Cmd>lua _G.jump_definition_of_clicked()<CR>",
+        vim.keymap.set("n", "<RightMouse>",
+          "<LeftMouse><Cmd>lua _G.jump_definition_of_clicked()<CR>",
           { noremap = true, silent = true })
       end
     },

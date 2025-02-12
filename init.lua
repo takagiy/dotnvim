@@ -180,6 +180,7 @@ require("lazy").setup({
             })
           end
         })
+
         vim.api.nvim_create_autocmd("LspAttach", {
           callback = function(ev)
             local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -196,6 +197,7 @@ require("lazy").setup({
             end
           end,
         })
+
         function _G.jump_definition_of_clicked()
           local mousepos = vim.fn.getmousepos()
           local window_type = vim.fn.win_gettype(mousepos.winid)
@@ -205,10 +207,22 @@ require("lazy").setup({
           vim.lsp.buf.definition()
         end
 
+        function _G.hover_definition_of_clicked()
+          local mousepos = vim.fn.getmousepos()
+          local window_type = vim.fn.win_gettype(mousepos.winid)
+          if window_type ~= '' or vim.bo.buftype ~= '' then
+            return
+          end
+          vim.lsp.buf.hover()
+        end
+
         vim.opt.mouse = "a"
         vim.opt.mousemodel = "extend"
         vim.keymap.set("n", "<RightMouse>",
           "<LeftMouse><Cmd>lua _G.jump_definition_of_clicked()<CR>",
+          { noremap = true, silent = true })
+        vim.keymap.set("n", "<LeftMouse>",
+          "<LeftMouse><Cmd>lua _G.hover_definition_of_clicked()<CR>",
           { noremap = true, silent = true })
       end
     },

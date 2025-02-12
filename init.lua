@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
+      { out, "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -14,12 +14,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.cmd [[
+vim.cmd([[
   augroup lazy_user_config
     autocmd!
     autocmd BufWritePost init.lua source <afile> | Lazy sync
   augroup end
-]]
+]])
 
 require("lazy").setup({
   spec = {
@@ -27,14 +27,14 @@ require("lazy").setup({
       "github/copilot.vim",
       config = function()
         vim.g.copilot_filetypes = { gitcommit = true }
-      end
+      end,
     },
     { "jghauser/mkdir.nvim" },
     {
       "lambdalisue/suda.vim",
       init = function()
         vim.g.suda_smart_edit = 1
-      end
+      end,
     },
     {
       "junegunn/fzf.vim",
@@ -43,12 +43,12 @@ require("lazy").setup({
           "junegunn/fzf",
           build = function()
             vim.fn["fzf#install"]()
-          end
+          end,
         },
       },
       config = function()
         vim.g.fzf_layout = {
-          window = { width = 0.9, height = 0.9 }
+          window = { width = 0.9, height = 0.9 },
         }
         local opts = { noremap = true, silent = true }
         vim.keymap.set("n", "e", ":GFiles --cached --others --exclude-standard<CR>", opts)
@@ -56,7 +56,7 @@ require("lazy").setup({
         vim.keymap.set("n", "t", ":Buffers<CR>", opts)
         vim.keymap.set("n", "H", ":History<CR>", opts)
         vim.keymap.set("n", "?", ":Lines<CR>", opts)
-      end
+      end,
     },
     {
       "navarasu/onedark.nvim",
@@ -64,11 +64,11 @@ require("lazy").setup({
         style = "light",
       },
       config = function(plug, opts)
-        vim.cmd [[syntax on]]
+        vim.cmd([[syntax on]])
         vim.opt.background = "light"
         require("onedark").setup(opts)
         require("onedark").load()
-      end
+      end,
     },
     {
       "olimorris/persisted.nvim",
@@ -84,11 +84,13 @@ require("lazy").setup({
           buffer_index = true,
           button = "x",
           filetype = {
-            enabled = false
+            enabled = false,
           },
-        }
+        },
       },
-      init = function() vim.g.barbar_auto_setup = false end,
+      init = function()
+        vim.g.barbar_auto_setup = false
+      end,
       config = function(plug, opts)
         require("barbar").setup(opts)
         local keyset = vim.keymap.set
@@ -106,7 +108,7 @@ require("lazy").setup({
         keyset("n", "8", "<Cmd>BufferGoto 8<CR>", opts)
         keyset("n", "9", "<Cmd>BufferGoto 9<CR>", opts)
         keyset("n", "0", "<Cmd>BufferLast<CR>", opts)
-      end
+      end,
     },
     {
       "nvim-treesitter/nvim-treesitter",
@@ -131,10 +133,10 @@ require("lazy").setup({
             enable = true,
           },
           indent = {
-            enable = true
-          }
+            enable = true,
+          },
         })
-      end
+      end,
     },
     {
       "williamboman/mason.nvim",
@@ -155,13 +157,13 @@ require("lazy").setup({
             lspconfig[server_name].setup({
               capabilities = require("cmp_nvim_lsp").default_capabilities(),
             })
-          end
+          end,
         })
 
         function _G.jump_definition_of_clicked()
           local mousepos = vim.fn.getmousepos()
           local window_type = vim.fn.win_gettype(mousepos.winid)
-          if window_type ~= '' or vim.bo.buftype ~= '' then
+          if window_type ~= "" or vim.bo.buftype ~= "" then
             return
           end
           vim.lsp.buf.definition()
@@ -170,7 +172,7 @@ require("lazy").setup({
         function _G.hover_definition_of_clicked()
           local mousepos = vim.fn.getmousepos()
           local window_type = vim.fn.win_gettype(mousepos.winid)
-          if window_type ~= '' or vim.bo.buftype ~= '' then
+          if window_type ~= "" or vim.bo.buftype ~= "" then
             return
           end
           vim.lsp.buf.hover()
@@ -178,13 +180,33 @@ require("lazy").setup({
 
         vim.opt.mouse = "a"
         vim.opt.mousemodel = "extend"
-        vim.keymap.set("n", "<RightMouse>",
+        vim.keymap.set(
+          "n",
+          "<RightMouse>",
           "<LeftMouse><Cmd>lua _G.jump_definition_of_clicked()<CR>",
-          { noremap = true, silent = true })
-        vim.keymap.set("n", "<LeftMouse>",
+          { noremap = true, silent = true }
+        )
+        vim.keymap.set(
+          "n",
+          "<LeftMouse>",
           "<LeftMouse><Cmd>lua _G.hover_definition_of_clicked()<CR>",
-          { noremap = true, silent = true })
-      end
+          { noremap = true, silent = true }
+        )
+      end,
+    },
+    {
+      "nvimtools/none-ls.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+      },
+      config = function()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+          sources = {
+            null_ls.builtins.formatting.stylua,
+          },
+        })
+      end,
     },
     {
       dir = "~/Codes/nvim/lsp-actiononsave.nvim",
@@ -194,7 +216,12 @@ require("lazy").setup({
       opts = {
         verbose = true,
         servers = {
-          lua_ls = { "format" },
+          ["null-ls"] = function(ft)
+            local actions = {
+              lua = { "format" },
+            }
+            return actions[ft] or {}
+          end,
           biome = { "format", "codeAction/source.organizeImports", "codeAction/source.fixAll" },
         },
       },
@@ -210,11 +237,11 @@ require("lazy").setup({
         local cmp = require("cmp")
         cmp.setup({
           mapping = cmp.mapping.preset.insert({
-            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping.abort(),
-            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+            ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-Space>"] = cmp.mapping.complete(),
+            ["<C-e>"] = cmp.mapping.abort(),
+            ["<CR>"] = cmp.mapping.confirm({ select = true }),
           }),
           sources = cmp.config.sources({
             { name = "nvim_lsp" },
@@ -222,17 +249,17 @@ require("lazy").setup({
             { name = "path" },
           }),
         })
-      end
-    }
+      end,
+    },
   },
 })
 
-vim.cmd [[
+vim.cmd([[
   augroup terminal_config
     autocmd!
     autocmd TermOpen,TermEnter * startinsert | set buflisted
   augroup end
-]]
+]])
 
 local set = vim.opt
 

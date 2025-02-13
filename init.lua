@@ -75,10 +75,21 @@ require("lazy").setup({
       --@type snacks.Config
       opts = {
         input = { enabled = true },
-        notifier = { enabled = true, timeout = 3000, top_down = false, margin = { bottom = 1 } },
+        notifier = {
+          enabled = true,
+          timeout = 3000,
+          top_down = false,
+          margin = { bottom = 1 },
+        },
         styles = {
           input = {
             relative = "cursor",
+          },
+          notification = {
+            wo = {
+              wrap = true,
+              conceallevel = 0,
+            },
           },
         },
       },

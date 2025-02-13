@@ -71,6 +71,18 @@ require("lazy").setup({
       end,
     },
     {
+      "folke/snacks.nvim",
+      --@type snacks.Config
+      opts = {
+        input = { enabled = true },
+        styles = {
+          input = {
+            relative = "cursor",
+          },
+        },
+      },
+    },
+    {
       "olimorris/persisted.nvim",
       opts = {
         use_git_branch = true,
@@ -208,6 +220,9 @@ require("lazy").setup({
           "<LeftMouse><Cmd>lua _G.hover_definition_of_clicked()<CR>",
           { noremap = true, silent = true }
         )
+
+        vim.g.mapleader = " "
+        vim.keymap.set("n", "<leader>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
       end,
     },
     {
@@ -222,22 +237,6 @@ require("lazy").setup({
             null_ls.builtins.formatting.stylua,
           },
         })
-      end,
-    },
-    {
-      "nvimdev/lspsaga.nvim",
-      event = "LspAttach",
-      config = function()
-        require("lspsaga").setup({
-          symbol_in_winbar = {
-            enable = false,
-          },
-          lightbulb = {
-            enable = false,
-          },
-        })
-        vim.g.mapleader = " "
-        vim.keymap.set("n", "<leader>rn", "<Cmd>Lspsaga rename<CR>", { noremap = true, silent = true })
       end,
     },
     {

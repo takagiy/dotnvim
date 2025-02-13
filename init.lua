@@ -91,6 +91,9 @@ require("lazy").setup({
     },
     {
       "navarasu/onedark.nvim",
+      dependencies = {
+        "folke/snacks.nvim",
+      },
       opts = {
         style = "light",
       },
@@ -99,14 +102,52 @@ require("lazy").setup({
         vim.opt.background = "light"
         require("onedark").setup(opts)
         require("onedark").load()
+        vim.cmd([[hi link SnacksIndentChunk Comment]])
+        vim.cmd([[hi link SnacksIndentScope Comment]])
       end,
     },
     {
       "folke/snacks.nvim",
+      lazy = false,
       --@type snacks.Config
       opts = {
         rename = { enabled = true },
         input = { enabled = true },
+        animate = { enabled = true },
+        scroll = {
+          enabled = true,
+          animate = {
+            easing = "inOutQuad",
+          },
+          animate_repeat = {
+            easing = "inOutQuad",
+          },
+        },
+        indent = {
+          enabled = true,
+          indent = {
+            only_scope = true,
+            char = " ",
+          },
+          scope = {
+            char = "┊",
+          },
+          chunk = {
+            enabled = true,
+            char = {
+              vertical = "┊",
+              horizontal = "┈",
+              arrow = "┈",
+            },
+          },
+          animate = {
+            style = "up_down",
+            duration = {
+              step = 5,
+              total = 200,
+            },
+          },
+        },
         notifier = {
           enabled = true,
           timeout = 3000,

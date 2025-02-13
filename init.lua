@@ -127,7 +127,7 @@ require("lazy").setup({
       },
       keys = {
         {
-          "<leader>rf",
+          "<leader>cn",
           function()
             Snacks.rename.rename_file()
           end,

@@ -149,14 +149,30 @@ require("lazy").setup({
         "williamboman/mason.nvim",
         "neovim/nvim-lspconfig",
         "hrsh7th/cmp-nvim-lsp",
+        "creativenull/efmls-configs-nvim",
       },
       config = function()
         local lspconfig = require("lspconfig")
-        require("mason-lspconfig").setup_handlers({
-          function(server_name)
-            lspconfig[server_name].setup({
-              capabilities = require("cmp_nvim_lsp").default_capabilities(),
-            })
+        require("mason-lspconfig").setup({
+          ensure_installed = {
+            "lua_ls",
+            "biome",
+            "ts_ls",
+          },
+          handlers = {
+            function(server_name)
+              lspconfig[server_name].setup({
+                capabilities = require("cmp_nvim_lsp").default_capabilities(),
+              })
+            end,
+          },
+        })
+
+        vim.o.updatetime = 250
+        vim.api.nvim_create_autocmd("CursorHold", {
+          group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+          callback = function()
+            vim.diagnostic.open_float(nil, { focus = false })
           end,
         })
 
@@ -209,6 +225,22 @@ require("lazy").setup({
       end,
     },
     {
+      "nvimdev/lspsaga.nvim",
+      event = "LspAttach",
+      config = function()
+        require("lspsaga").setup({
+          symbol_in_winbar = {
+            enable = false,
+          },
+          lightbulb = {
+            enable = false,
+          },
+        })
+        vim.g.mapleader = " "
+        vim.keymap.set("n", "<leader>rn", "<Cmd>Lspsaga rename<CR>", { noremap = true, silent = true })
+      end,
+    },
+    {
       dir = "~/Codes/nvim/lsp-actiononsave.nvim",
       dependencies = {
         "neovim/nvim-lspconfig",
@@ -217,12 +249,16 @@ require("lazy").setup({
         verbose = true,
         servers = {
           ["null-ls"] = function(ft)
-            local actions = {
+            local actions_for = {
               lua = { "format" },
             }
-            return actions[ft] or {}
+            return actions_for[ft] or {}
           end,
-          biome = { "format", "codeAction/source.organizeImports", "codeAction/source.fixAll" },
+          biome = {
+            "format",
+            "codeAction/source.organizeImports",
+            "codeAction/source.fixAll",
+          },
         },
       },
     },
@@ -250,6 +286,14 @@ require("lazy").setup({
           }),
         })
       end,
+    },
+    {
+      "j-hui/fidget.nvim",
+      opts = {
+        notification = {
+          override_vim_notify = true,
+        },
+      },
     },
   },
 })

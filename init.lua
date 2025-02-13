@@ -77,17 +77,18 @@ require("lazy").setup({
           end,
         },
       },
-      config = function()
+      init = function()
         vim.g.fzf_layout = {
           window = { width = 0.9, height = 0.9 },
         }
-        local opts = { noremap = true, silent = true }
-        vim.keymap.set("n", "e", ":GFiles --cached --others --exclude-standard<CR>", opts)
-        vim.keymap.set("n", "r", ":Rg<CR>", opts)
-        vim.keymap.set("n", "t", ":Buffers<CR>", opts)
-        vim.keymap.set("n", "H", ":History<CR>", opts)
-        vim.keymap.set("n", "?", ":Lines<CR>", opts)
       end,
+      keys = {
+        { "e", ":GFiles --cached --others --exclude-standard<CR>" },
+        { "r", ":Rg<CR>" },
+        { "t", ":Buffers<CR>" },
+        { "H", ":History<CR>" },
+        { "?", ":Lines<CR>" },
+      },
     },
     {
       "navarasu/onedark.nvim",
@@ -196,24 +197,21 @@ require("lazy").setup({
       init = function()
         vim.g.barbar_auto_setup = false
       end,
-      config = function(plug, opts)
-        require("barbar").setup(opts)
-        local keyset = vim.keymap.set
-        local opts = { noremap = true, silent = true }
-        keyset("n", "qq", "<Cmd>BufferClose<CR>", opts)
-        keyset("n", "<Tab>", "<Cmd>BufferNext<CR>", opts)
-        keyset("n", "<S-Tab>", "<Cmd>BufferPrevious<CR>", opts)
-        keyset("n", "1", "<Cmd>BufferGoto 1<CR>", opts)
-        keyset("n", "2", "<Cmd>BufferGoto 2<CR>", opts)
-        keyset("n", "3", "<Cmd>BufferGoto 3<CR>", opts)
-        keyset("n", "4", "<Cmd>BufferGoto 4<CR>", opts)
-        keyset("n", "5", "<Cmd>BufferGoto 5<CR>", opts)
-        keyset("n", "6", "<Cmd>BufferGoto 6<CR>", opts)
-        keyset("n", "7", "<Cmd>BufferGoto 7<CR>", opts)
-        keyset("n", "8", "<Cmd>BufferGoto 8<CR>", opts)
-        keyset("n", "9", "<Cmd>BufferGoto 9<CR>", opts)
-        keyset("n", "0", "<Cmd>BufferLast<CR>", opts)
-      end,
+      keys = {
+        { "qq", "<Cmd>BufferClose<CR>" },
+        { "<Tab>", "<Cmd>BufferNext<CR>" },
+        { "<S-Tab>", "<Cmd>BufferPrevious<CR>" },
+        { "1", "<Cmd>BufferGoto 1<CR>" },
+        { "2", "<Cmd>BufferGoto 2<CR>" },
+        { "3", "<Cmd>BufferGoto 3<CR>" },
+        { "4", "<Cmd>BufferGoto 4<CR>" },
+        { "5", "<Cmd>BufferGoto 5<CR>" },
+        { "6", "<Cmd>BufferGoto 6<CR>" },
+        { "7", "<Cmd>BufferGoto 7<CR>" },
+        { "8", "<Cmd>BufferGoto 8<CR>" },
+        { "9", "<Cmd>BufferGoto 9<CR>" },
+        { "0", "<Cmd>BufferLast<CR>" },
+      },
     },
     {
       "nvim-treesitter/nvim-treesitter",

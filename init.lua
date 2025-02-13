@@ -247,15 +247,11 @@ require("lazy").setup({
       build = ":MasonUpdate",
       opts = {},
     },
+    { "williamboman/mason.nvim" },
+    { "neovim/nvim-lspconfig" },
     {
       "williamboman/mason-lspconfig.nvim",
       lazy = false,
-      dependencies = {
-        "williamboman/mason.nvim",
-        "neovim/nvim-lspconfig",
-        "hrsh7th/cmp-nvim-lsp",
-        "creativenull/efmls-configs-nvim",
-      },
       config = function()
         local lspconfig = require("lspconfig")
         require("mason-lspconfig").setup({
@@ -324,9 +320,6 @@ require("lazy").setup({
     },
     {
       dir = "~/Codes/nvim/lsp-actiononsave.nvim",
-      dependencies = {
-        "neovim/nvim-lspconfig",
-      },
       opts = {
         verbose = true,
         servers = {
@@ -346,6 +339,7 @@ require("lazy").setup({
     },
     {
       "hrsh7th/nvim-cmp",
+      lazy = false,
       dependencies = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",

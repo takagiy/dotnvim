@@ -249,6 +249,7 @@ require("lazy").setup({
     },
     {
       "williamboman/mason-lspconfig.nvim",
+      lazy = false,
       dependencies = {
         "williamboman/mason.nvim",
         "neovim/nvim-lspconfig",
@@ -300,22 +301,12 @@ require("lazy").setup({
 
         vim.opt.mouse = "a"
         vim.opt.mousemodel = "extend"
-        vim.keymap.set(
-          "n",
-          "<RightMouse>",
-          "<LeftMouse><Cmd>lua _G.jump_definition_of_clicked()<CR>",
-          { noremap = true, silent = true }
-        )
-        vim.keymap.set(
-          "n",
-          "<LeftMouse>",
-          "<LeftMouse><Cmd>lua _G.hover_definition_of_clicked()<CR>",
-          { noremap = true, silent = true }
-        )
-
-        vim.g.mapleader = " "
-        vim.keymap.set("n", "<leader>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true, silent = true })
       end,
+      keys = {
+        { "<RightMouse>", "<LeftMouse><Cmd>lua _G.jump_definition_of_clicked()<CR>" },
+        { "<LeftMouse>", "<LeftMouse><Cmd>lua _G.hover_definition_of_clicked()<CR>" },
+        { "<leader>rn", "<Cmd>lua vim.lsp.buf.rename()<CR>" },
+      },
     },
     {
       "nvimtools/none-ls.nvim",

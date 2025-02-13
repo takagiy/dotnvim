@@ -75,6 +75,7 @@ require("lazy").setup({
       --@type snacks.Config
       opts = {
         input = { enabled = true },
+        notifier = { enabled = true, timeout = 3000, top_down = false, margin = { bottom = 1 } },
         styles = {
           input = {
             relative = "cursor",
@@ -285,14 +286,6 @@ require("lazy").setup({
           }),
         })
       end,
-    },
-    {
-      "j-hui/fidget.nvim",
-      opts = {
-        notification = {
-          override_vim_notify = true,
-        },
-      },
     },
   },
 })

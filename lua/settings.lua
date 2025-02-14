@@ -19,10 +19,13 @@ set.hidden = true
 
 set.shell = "zsh -l"
 
+set.undofile = true
+
 vim.g.netrw_liststyle = 3
 vim.g.netrw_banner = 0
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.keymap.set("n", "TT", "<Cmd>terminal<CR>", { noremap = true })
 vim.keymap.set("t", "<Esc>", [[(&filetype == "fzf") ? "<Esc>" : "<C-\\><C-n>"]], { noremap = true, expr = true })
 vim.keymap.set("n", ";", ":", { noremap = true })

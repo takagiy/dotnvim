@@ -41,4 +41,14 @@ return {
       })
     end,
   },
+  {
+    "catgoose/nvim-colorizer.lua",
+    event = "BufReadPre",
+    opts = {
+      user_default_options = {
+        css = true,
+        tailwind = true,
+      },
+    },
+  },
 }

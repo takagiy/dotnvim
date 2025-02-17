@@ -14,7 +14,6 @@ return {
     vim.g.barbar_auto_setup = false
   end,
   keys = {
-    { "qq", "<Cmd>BufferClose<CR>" },
     { "<Tab>", "<Cmd>BufferNext<CR>" },
     { "<S-Tab>", "<Cmd>BufferPrevious<CR>" },
     { "1", "<Cmd>BufferGoto 1<CR>" },

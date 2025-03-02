@@ -15,7 +15,9 @@ return {
         width = 0.9,
       },
       git = {
-        cmd = "git ls-files --cached --others --exclude-standard",
+        files = {
+          cmd = "git ls-files --cached --others --exclude-standard",
+        },
       },
     },
     keys = {

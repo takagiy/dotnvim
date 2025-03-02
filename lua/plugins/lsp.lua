@@ -86,7 +86,13 @@ return {
           }
           return actions_for[ft] or {}
         end,
+        ts_ls = {
+          "format",
+          "codeAction/source.organizeImports",
+          "codeAction/source.fixAll",
+        },
         biome = {
+          skip = "ts_ls",
           "format",
           "codeAction/source.organizeImports",
           "codeAction/source.fixAll",

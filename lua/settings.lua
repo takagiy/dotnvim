@@ -1,7 +1,7 @@
 vim.cmd([[
   augroup terminal_config
     autocmd!
-    autocmd TermOpen,TermEnter * startinsert | set buflisted
+    autocmd TermOpen * set buflisted
   augroup end
 ]])
 
@@ -27,8 +27,7 @@ vim.g.netrw_banner = 0
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.keymap.set("n", "qq", "<Cmd>bdelete<CR>", { noremap = true })
-vim.keymap.set("n", "TT", "<Cmd>terminal<CR>", { noremap = true })
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, expr = true })
+vim.keymap.set("t", "<M-n>", [[<C-\><C-n>]], { noremap = true })
 vim.keymap.set("n", ";", ":", { noremap = true })
 vim.keymap.set("", "<PageUp>", "", { noremap = true })
 vim.keymap.set("", "<PageDown>", "", { noremap = true })

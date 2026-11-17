@@ -4,9 +4,8 @@ return {
     dependencies = {
       {
         "junegunn/fzf",
-        build = function()
-          vim.fn["fzf#install"]()
-        end,
+        -- Not fzf#install(): on Windows it runs install.ps1, whose version check calls `cmd`, which is MSYS2's script here.
+        build = "./install --bin",
       },
     },
     opts = {

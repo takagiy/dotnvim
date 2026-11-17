@@ -76,7 +76,7 @@ return {
     end,
   },
   {
-    dir = "~/Codes/nvim/lsp-actiononsave.nvim",
+    "takagiy/lsp-actiononsave.nvim",
     opts = {
       verbose = true,
       servers = {

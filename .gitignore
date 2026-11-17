@@ -2,3 +2,5 @@
 .netrwhist
 # Neovim compiles spell files from the word lists kept beside them.
 spell/*.spl
+# Neovim writes help tags here when docs is indexed as help.
+docs/tags

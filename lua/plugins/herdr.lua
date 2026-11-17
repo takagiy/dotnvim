@@ -11,7 +11,7 @@ return {
   end,
   config = function()
     local app = require("herdr-core").setup({
-      auto_insert = false,
+      auto_insert = true,
       sidebar_width = 32,
     })
     if not app.actions then return end

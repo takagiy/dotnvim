@@ -15,10 +15,10 @@ return {
       sidebar_width = 32,
     })
     if not app.actions then return end
-    vim.keymap.set({ "n", "t" }, "<leader>ht", app.actions.new_tab)
-    vim.keymap.set({ "n", "t" }, "<leader>hv", app.actions.new_vertical)
-    vim.keymap.set({ "n", "t" }, "<leader>hs", app.actions.new_horizontal)
-    vim.keymap.set({ "n", "t" }, "<leader>hb", app.actions.toggle_sidebar)
-    vim.keymap.set({ "n", "t" }, "<leader>hf", app.actions.focus_sidebar)
+    vim.keymap.set("n", "<leader>ht", app.actions.new_tab)
+    vim.keymap.set("n", "<leader>hv", app.actions.new_vertical)
+    vim.keymap.set("n", "<leader>hs", app.actions.new_horizontal)
+    vim.keymap.set("n", "<leader>hb", app.actions.toggle_sidebar)
+    vim.keymap.set("n", "<leader>hf", app.actions.focus_sidebar)
   end,
 }

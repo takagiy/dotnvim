@@ -2,6 +2,7 @@ vim.cmd([[
   augroup terminal_config
     autocmd!
     autocmd TermOpen * set buflisted
+    autocmd TermOpen,BufWinEnter * if &buftype ==# 'terminal' | setlocal nonumber signcolumn=no | else | setlocal number< signcolumn< | endif
   augroup end
 ]])
 
@@ -10,6 +11,10 @@ local set = vim.opt
 set.clipboard = "unnamedplus"
 
 set.mouse = "a"
+
+set.number = true
+
+set.showmode = false
 
 set.expandtab = true
 set.tabstop = 2

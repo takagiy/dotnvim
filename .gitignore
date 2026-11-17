@@ -1,0 +1,4 @@
+# netrw writes its bookmarks and history here.
+.netrwhist
+# Neovim compiles spell files from the word lists kept beside them.
+spell/*.spl
